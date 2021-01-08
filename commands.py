@@ -1,6 +1,6 @@
 from telegram import Update, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler, ConversationHandler, CallbackContext
-from match_input import user_search
+from general_helpers import user_search
 
 import logging
 import ratings
@@ -54,6 +54,7 @@ def substitute(update: Update, context: CallbackContext) -> None:
     if rated == True:
         # Return formatted response
         update.message.reply_text(text=sub, parse_mode = ParseMode.HTML)
+        update.message.reply_text(text="What else do you want to substitute?")
     else:
         # STEP 2B: Else haven't rated
         keyboard = [
@@ -88,7 +89,7 @@ def update_rating(update: Update, context: CallbackContext) -> None:
     # Reply with what the user selected
     reply_markup = InlineKeyboardMarkup([])
     query.edit_message_reply_markup(reply_markup)
-    query.message.reply_text(text=f"Thank you for your feedback! You selected: {usefulness}")
+    query.message.reply_text(text=f"Thank you for your feedback! You selected: {usefulness}\n\n What else do you want to substitute?")
 
     user_id = query.from_user.id    # Integer
 

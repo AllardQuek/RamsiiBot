@@ -1,7 +1,18 @@
 from sqlalchemy import create_engine
 from ratings import percentage_rating
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, ParseMode
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
 engine = create_engine('sqlite:///ingredient_list.db')      # Access ingredient list
+
+def start(update: Update, context: CallbackContext) -> None:
+    """Send a message when the command /start is issued."""
+    name = update.message.chat.first_name
+
+    intro = f"Hi {name}! I'm <b>Ramsay</b>, the best chef in the world with 7 Michelin stars! \nMissing an ingredient for your recipe? What ingredient are you having a hard time finding? (Or if you're bored, try /trivia to get random food trivia!)"
+
+    return update.message.reply_text(text=intro, parse_mode= ParseMode.HTML)
+
 
 def user_search(user_input):
     with engine.connect() as connection:
@@ -29,17 +40,17 @@ def user_search(user_input):
                 if row['ing_cs'] == "NIL":
                     CS = ""
                 else:
-                    CS = "\n\nYou can closely substitute " + row['orig_unit'] + " " + row['ing_input'] + " with <b>" + row['ing_cs'] + "</b>."
+                    CS = "\n\nYou can closely substitute " + str(row['orig_unit']) + " " + row['ing_input'] + " with <b>" + row['ing_cs'] + "</b>."
                 
                 if row['ing_sp'] == "NIL":
                     SP = ""
                 else:
-                    SP = "\n\nYou can make " + row['orig_unit'] + " " + row['ing_input'] + " with <b>" + row['ing_sp'] + "</b>."
+                    SP = "\n\nYou can make " + str(row['orig_unit']) + " " + row['ing_input'] + " with <b>" + row['ing_sp'] + "</b>."
                 
                 if row['ing_alt'] == "NIL":
                     ALT = ""
                 else:
-                    ALT = "\n\nYou can entirely replace " + row['orig_unit'] + " " + row['ing_input'] + " with <b>" + row['ing_alt'] + "</b>."
+                    ALT = "\n\nYou can entirely replace " + str(row['orig_unit']) + " " + row['ing_input'] + " with <b>" + row['ing_alt'] + "</b>."
                 
                 if row['isVegan'] == 'Yes':
                     VEG = "\n<i>Vegan</i>"
@@ -52,3 +63,7 @@ def user_search(user_input):
 
         if search_failure:
             return "Ingredient cannot be found! Please try again."
+
+
+# def suggestion():
+# TODO: suggestions at failure state and not useful state

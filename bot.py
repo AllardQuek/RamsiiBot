@@ -10,7 +10,7 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler, ConversationHandler, CallbackContext
 from pprint import pprint
 from commands import trivia_command, substitute, end, update_rating
-from start_command import start
+from general_helpers import start
 
 import os
 import logging
