@@ -23,6 +23,7 @@ from pprint import pprint
 from commands import help_command, trivia_command, substitute, cancel
 from start_command import start
 
+
 import os
 import logging
 
