@@ -1,6 +1,6 @@
 from telegram import Update, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler, ConversationHandler, CallbackContext
-from general_helpers import user_search
+from general_helpers import user_search, suggestion
 
 import logging
 import ratings
@@ -50,12 +50,19 @@ def substitute(update: Update, context: CallbackContext) -> None:
     sub = user_search(ingredient)
 
     if not sub:
+        sug_keyboard = [
+            [
+                InlineKeyboardButton("Suggest Something New", callback_data="Suggest Something New"),
+            ],
+        ]
+
+        sug_reply_markup = InlineKeyboardMarkup(sug_keyboard)
         # If sub turns out to be the empty string, means we found no results from our database
-        sub = "Ingredient cannot be found! Please try again."
-        update.message.reply_text(text=sub, parse_mode = ParseMode.HTML)
+        sub = "Ingredient cannot be found! Please try again.\n\n Alternatively, you may click /suggest to suggest substitutions I don't know about!"
+        update.message.reply_text(sub, parse_mode=ParseMode.HTML, reply_markup=sug_reply_markup)
 
         # Reply to user and exit from function
-        return      
+        return
 
     # If we did get a result from our database, query db to check if user has already rated it
     rated = ratings.check_rating(str(user_id), ingredient)     
@@ -141,6 +148,13 @@ def update_rating(update: Update, context: CallbackContext) -> None:
     else:
         logger.info("Adding negative rating...")
         ratings.negative_rating(str(user_id), ingredient)
+
+
+# def suggest_command(update: Update, context: CallbackContext) -> None:
+#     update.message.reply_text(f"Type your suggestion below, and we will look into it.")
+#     suggestion_entry = update.message.text  # String
+#     user_id = update.message.from_user.id  # Integer
+#     if ()
 
 
 def end(update: Update, context: CallbackContext) -> int:

@@ -36,6 +36,7 @@ def main():
     dispatcher.add_handler(CommandHandler("trivia", trivia_command))
     dispatcher.add_handler(CommandHandler("hungry", hungry_command))
     dispatcher.add_handler(CommandHandler("joke", joke_command))
+    # dispatcher.add_handler(CommandHandler("suggest", suggest_command))
     dispatcher.add_handler(CommandHandler("end", end))
     updater.dispatcher.add_handler(CallbackQueryHandler(update_rating))
 

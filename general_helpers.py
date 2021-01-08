@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, insert, text
 from ratings import percentage_rating
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
@@ -72,5 +72,11 @@ def user_search(user_input):
         return ""
 
 
-# def suggestion():
+def suggestion(user_id, category, user_suggestion):
+    with engine.connect() as connection:
+        suggestion_entry = {"id": user_id, "category": category, "suggestions": user_suggestion}
+        ins_statement = text("""insert into suggestions(id, category, suggestions) values(:id, :category, :suggestions)""")
+        connection.execute(ins_statement, **suggestion_entry)
+
+
 # TODO: suggestions at failure state and not useful state
