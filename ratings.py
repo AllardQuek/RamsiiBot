@@ -13,7 +13,7 @@ def check_rating(user_id, user_input):
         for row in result:
             if user_id == row['id'] and user_input == row['rated_ing']:
                 ALREADY_RATED = True
-                
+        print(ALREADY_RATED)
         return ALREADY_RATED
 
 
