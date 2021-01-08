@@ -17,17 +17,14 @@ bot.
 
 
 from __future__ import print_function
-import logging
-
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from pprint import pprint
-import os
-import spoonacular as sp
 from commands import help_command, echo, trivia_command
 from start_command import start
 
-api_instance = sp.API("7622a72decf948a0b1fb094128e2f884")
+import os
+import logging
 
 
 PORT = int(os.environ.get('PORT', 5000))
