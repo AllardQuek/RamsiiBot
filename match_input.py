@@ -22,15 +22,15 @@ def userSearch(user_input):
                 if row['ing_cs'] == "NIL":
                     CS = ""
                 else:
-                    CS = "\n" + row['ing_cs']
+                    CS = "\n\nYou can closely substitute " + row['ing_input'] + " with <b>" + row['ing_cs'] + "</b>."
                 if row['ing_sp'] == "NIL":
                     SP = ""
                 else:
-                    SP = "\n" + row['ing_sp']
+                    SP = "\n\nYou can make " + row['ing_input'] + " with <b>" + row['ing_sp'] + "</b>."
                 if row['ing_alt'] == "NIL":
                     ALT = ""
                 else:
-                    ALT = "\n\nYou can also entirely replace " + row['ing_input'] + " with <b>" + row['ing_alt'] + "</b>."
+                    ALT = "\n\nYou can entirely replace " + row['ing_input'] + " with <b>" + row['ing_alt'] + "</b>."
                 if row['isVegan'] == 'Yes':
                     VEG = "\n<i>Vegan</i>"
                 elif row['isVegan'] == 'No':
@@ -39,6 +39,7 @@ def userSearch(user_input):
                     VEG = "\n<i>May or may not be vegan</i>"
 
                 return TITLE + VEG + CS + SP + ALT
+                break
 
         if search_failure:
-            print("Ingredient cannot be found! Please try another one.")
+            return "Ingredient cannot be found! Please try again."
