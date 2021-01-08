@@ -17,7 +17,7 @@ def user_search(user_input):
     with engine.connect() as connection:
         # Searches each row of the db to access the relevant data
         result = connection.execute("select * from ingredient_substitution")
-        search_failure = True
+        # search_failure = True
 
         CS = ""     # Close substitutes
         SP = ""     # Self-produce
@@ -26,7 +26,7 @@ def user_search(user_input):
 
         for row in result:
             if user_input.lower() == row['ing_input']:				
-                search_failure = False
+                # search_failure = False
                 TITLE = "<b><u>" + row['full_ing'].upper() + "</u></b>"
                 PERCENTAGE_RATING = str(percentage_rating(user_input))
                 SEPARATOR = "\n\n\n---------------------\n\n"
@@ -66,8 +66,9 @@ def user_search(user_input):
 
                 return TITLE + VEG + CS + SP + ALT + SEPARATOR + USER_RATING
 
-        if search_failure:
-            return "Ingredient cannot be found! Please try again."
+        # if search_failure:
+        # return "Ingredient cannot be found! Please try again."
+        return ""
 
 
 # def suggestion():

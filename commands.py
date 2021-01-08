@@ -50,15 +50,23 @@ def substitute(update: Update, context: CallbackContext) -> None:
     sub = user_search(ingredient)
     # * TODO: Ask user for rating
     # STEP 1: Query database to check if user has already rated
+
+    if not sub:
+        # If sub turns out to be the empty string, means we found no results from our database
+        sub = "Ingredient cannot be found! Please try again."
+        update.message.reply_text(text=sub, parse_mode = ParseMode.HTML)
+
+        # Reply to user and exit from function
+        return      
+
+    # If we did get a result from our database, check if user has already rated it
     rated = ratings.check_rating(str(user_id), ingredient)     
     
-    # STEP 2A: If rated already
     if rated == True:
-        # Return formatted response
+        # Return results and prompt for next substitution
         update.message.reply_text(text=sub, parse_mode = ParseMode.HTML)
         update.message.reply_text(text="What else do you want to substitute?")
     else:
-        # STEP 2B: Else haven't rated
         keyboard = [
             [
                 InlineKeyboardButton("Useful", callback_data=f"Useful {ingredient}"),
@@ -68,7 +76,7 @@ def substitute(update: Update, context: CallbackContext) -> None:
 
         reply_markup = InlineKeyboardMarkup(keyboard)
 
-        # Return formatted response with ratings
+        # Return results and prompt user for usefulness rating with an in-line keyboard
         update.message.reply_text(sub, parse_mode = ParseMode.HTML, reply_markup=reply_markup) 
 
 
