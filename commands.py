@@ -39,7 +39,7 @@ def trivia_command(update: Update, context: CallbackContext) -> None:
 
 
 def substitute(update: Update, context: CallbackContext) -> None:
-    """Echo the user message."""
+    """Return ingredient substitute(s)."""
     ingredient = update.message.text
     logger.info(f"Going to get {ingredient} substitutes...")
     update.message.reply_text(f"You asked for {ingredient} substitutes.")
