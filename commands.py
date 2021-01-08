@@ -49,7 +49,7 @@ def substitute(update: Update, context: CallbackContext) -> None:
     # * TODO: Ask user for rating
     # TODO STEP 1: Query database to check if user has already rated
     user = update.message.from_user
-    rated = ratings.check_rating(user.id, ingredient)
+    rated = ratings.check_rating(str(user.id), str(ingredient))
 
     # TODO STEP 2A: If rated already
     if rated == True:
@@ -87,10 +87,10 @@ def update_rating(update: Update, context: CallbackContext) -> None:
     # TODO: Update the database with user's rating
     if usefulness == "Useful":
         logger.info("Adding positive rating...")
-        ratings.positive_rating(user.id, reply_list[1])
+        ratings.positive_rating(str(user.id), str(reply_list[1]))
     else:
         logger.info("Adding negative rating...")
-        ratings.negative_rating(user.id, reply_list[1])
+        ratings.negative_rating(str(user.id), str(reply_list[1]))
     
 
 
