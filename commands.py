@@ -1,4 +1,4 @@
-from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update, ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext
 
 import spoonacular as sp
@@ -43,9 +43,7 @@ def substitute(update: Update, context: CallbackContext) -> None:       # Query 
     """Return ingredient substitute(s)."""
     ingredient = update.message.text
     logger.info(f"Going to get {ingredient} substitutes...")
-    update.message.reply_text(userSearch(f"{ingredient}"))
-
-
+    update.message.reply_text(text=userSearch(f"{ingredient}"), parse_mode= ParseMode.HTML)
 
 
     # TODO: Return formatted response
