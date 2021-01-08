@@ -46,7 +46,13 @@ def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     username = update.message.chat.username
 
-    update.message.reply_text(f"Hi {username}! I'm Ramsay, the best chef in the world with 7 Michelin stars!")              
+    intro = f"""
+        Hi {username}! I'm Ramsay, the best chef in the world with 7 Michelin stars! 
+        Missing an ingredient for your recipe? Let me find you a substitute right away!
+        Or if you're bored, try /trivia to get a random trivia!
+    """
+
+    update.message.reply_text(intro)              
 
 
 def help_command(update: Update, context: CallbackContext) -> None:
