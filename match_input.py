@@ -16,17 +16,17 @@ def userSearch(user_input):
                 if row['ing_cs'] == "NIL":
                     cs = ""
                 else:
-                    cs = "\n" + row['ing_cs']
+                    cs = "\nYou can closely substitute " + row['ing_input'] + " with " + row['ing_cs'] + "."
                 if row['ing_sp'] == "NIL":
                     sp = ""
                 else:
-                    sp = "\n" + row['ing_sp']
+                    sp = "\nYou can make "+ row['ing_input'] + " with " + row['ing_sp'] + "."
                 if row['ing_alt'] == "NIL":
                     alt = ""
                 else:
-                    alt = "\n" + row['ing_alt']
-                print(row['full_ing'] + cs + sp + alt)
+                    alt = "\nYou can also entirely replace " + row['ing_input'] + " with " + row['ing_alt'] + "."
+                return row['full_ing'] + cs + sp + alt
 
                 break
         if searchFailure:
-            print("Ingredient cannot be found! Please try another one.")
+            return "I'm sorry, I cannot find records for this ingredient. Please try again."

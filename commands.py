@@ -3,6 +3,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Conve
 
 import spoonacular as sp
 import logging
+from match_input import userSearch
 
 
 # Enable logging
@@ -38,13 +39,13 @@ def trivia_command(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(result)
 
 
-def substitute(update: Update, context: CallbackContext) -> None:
+def substitute(update: Update, context: CallbackContext) -> None:       # Query sqlite database for substitute(s)
     """Return ingredient substitute(s)."""
     ingredient = update.message.text
     logger.info(f"Going to get {ingredient} substitutes...")
-    update.message.reply_text(f"You asked for {ingredient} substitutes.")
+    update.message.reply_text(userSearch(f"{ingredient}"))
 
-    # TODO: Query sqllite database for substitute(s)
+
 
 
     # TODO: Return formatted response
