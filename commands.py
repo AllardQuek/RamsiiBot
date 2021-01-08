@@ -40,7 +40,9 @@ def trivia_command(update: Update, context: CallbackContext) -> None:
 
 def substitute(update: Update, context: CallbackContext) -> None:       
     """Return ingredient substitute(s)."""
-    ingredient = update.message.text
+    ingredient = update.message.text      # String
+    user = update.message.from_user.id    # Integer
+
     logger.info(f"Going to get {ingredient} substitutes...")
 
     # Query sqlite database for substitute(s)
@@ -48,8 +50,7 @@ def substitute(update: Update, context: CallbackContext) -> None:
 
     # * TODO: Ask user for rating
     # STEP 1: Query database to check if user has already rated
-    user = update.message.from_user
-    rated = ratings.check_rating(str(user.id), str(ingredient))     # TODO: Check if data type change required
+    rated = ratings.check_rating(str(user.id), ingredient)     # TODO: Check if data type change required
 
     # STEP 2A: If rated already
     if rated == True:
@@ -95,10 +96,10 @@ def update_rating(update: Update, context: CallbackContext) -> None:
     # Update the database with user's rating
     if usefulness == "Useful":
         logger.info("Adding positive rating...")
-        ratings.positive_rating(str(user.id), str(ingredient))      # TODO: Check if data type change required
+        ratings.positive_rating(str(user.id), ingredient)      # TODO: Check if data type change required
     else:
         logger.info("Adding negative rating...")
-        ratings.negative_rating(str(user.id), str(ingredient))
+        ratings.negative_rating(str(user.id), ingredient)
 
 
 def end(update: Update, context: CallbackContext) -> int:
