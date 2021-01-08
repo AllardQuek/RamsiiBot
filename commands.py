@@ -69,6 +69,21 @@ def substitute(update: Update, context: CallbackContext) -> None:
 
         # Return formatted response with ratings
         update.message.reply_text(sub, parse_mode = ParseMode.HTML, reply_markup=reply_markup) 
+
+
+def random_command(update: Update, context: CallbackContext) -> None:
+    """Return a random recipe."""
+    try:
+        # Query for random recipe
+        api_response = api_instance.get_random_food_trivia()
+        result = api_response.json()['text']
+        logger.info(f"Here is the result: {result}")
+
+        return update.message.reply_text(result)
+    except Exception as e:
+        print("Exception when calling DefaultApi->get_random_food_trivia: %s\n" % e)
+
+    update.message.reply_text(result)
     
 
 def update_rating(update: Update, context: CallbackContext) -> None:
