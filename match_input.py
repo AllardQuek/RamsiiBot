@@ -10,6 +10,7 @@ def userSearch(user_input):
         CS = ""
         SP = ""
         ALT = ""
+        VEG = ""
 
         for row in result:
             if user_input.lower() == row['ing_input']:				#searches each row of the db to access the relevant data
@@ -27,7 +28,14 @@ def userSearch(user_input):
                     ALT = ""
                 else:
                     ALT = "\n\nYou can also entirely replace " + row['ing_input'] + " with <b>" + row['ing_alt'] + "</b>."
-                return TITLE + CS + SP + ALT
+                if row['isVegan'] == 'Yes':
+                    VEG = "\n<i>Vegan</i>"
+                elif row['isVegan'] == 'No':
+                    VEG = "\n<i>Non-vegan</i>"
+                else:
+                    VEG = "\n<i>May or may not be vegan</i>"
+
+                return TITLE + VEG + CS + SP + ALT
 
                 break
         if searchFailure:
