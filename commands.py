@@ -29,7 +29,7 @@ def trivia_command(update: Update, context: CallbackContext) -> None:
         # Get Random Food Trivia
         api_response = api_instance.get_random_food_trivia()
         result = api_response.json()['text']
-        logging.info(f"Here is the result: {result}")
+        logger.info(f"Here is the result: {result}")
 
         return update.message.reply_text(result)
     except Exception as e:
@@ -51,7 +51,7 @@ def substitute(update: Update, context: CallbackContext) -> None:
     # * TODO: Ask user for rating
     # STEP 1: Query database to check if user has already rated
     rated = ratings.check_rating(str(user_id), ingredient)     
-
+    
     # STEP 2A: If rated already
     if rated == True:
         # Return formatted response
