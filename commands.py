@@ -47,16 +47,17 @@ def substitute(update: Update, context: CallbackContext) -> None:
     sub = user_search(ingredient)
 
     # * TODO: Ask user for rating
-    # TODO STEP 1: Query database to check if user has already rated
+    # STEP 1: Query database to check if user has already rated
+    print("INGREDIENT", ingredient)
     user = update.message.from_user
     rated = ratings.check_rating(str(user.id), str(ingredient))
 
-    # TODO STEP 2A: If rated already
+    # STEP 2A: If rated already
     if rated == True:
         # Return formatted response
         update.message.reply_text(text=sub, parse_mode = ParseMode.HTML)
     else:
-        # TODO STEP 2B: Else haven't rated
+        # STEP 2B: Else haven't rated
         keyboard = [
             [
                 InlineKeyboardButton("Useful", callback_data=f"Useful {ingredient}"),
@@ -78,20 +79,19 @@ def update_rating(update: Update, context: CallbackContext) -> None:
     # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
     query.answer()
     reply_list = query.data.split()
-    usefulness = reply_list[0]
+    usefulness, ingredient = reply_list[0], reply_list[1]
 
     # Reply with what the user selected
     query.edit_message_text(text=f"Thank you for your feedback! You selected: {usefulness}")
     user = query.from_user
 
-    # TODO: Update the database with user's rating
+    # Update the database with user's rating
     if usefulness == "Useful":
         logger.info("Adding positive rating...")
-        ratings.positive_rating(str(user.id), str(reply_list[1]))
+        ratings.positive_rating(user.id, ingredient)
     else:
         logger.info("Adding negative rating...")
-        ratings.negative_rating(str(user.id), str(reply_list[1]))
-    
+        ratings.negative_rating(user.id, ingredient)
 
 
 def end(update: Update, context: CallbackContext) -> int:
