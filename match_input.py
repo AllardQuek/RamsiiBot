@@ -7,28 +7,25 @@ def userSearch(user_input):
     with engine.connect() as connection:
         result = connection.execute("select * from ingredient_substitution")
         searchFailure = True
-        CS = ""
-        SP = ""
-        ALT = ""
-
+        cs = ""
+        sp = ""
+        alt = ""
         for row in result:
             if user_input.lower() == row['ing_input']:				#searches each row of the db to access the relevant data
                 searchFailure = False
-                TITLE = "<b><u>" + row['full_ing'].upper() + "</u></b>"
                 if row['ing_cs'] == "NIL":
-                    CS = ""
+                    cs = ""
                 else:
-                    CS = "\n\nYou can closely substitute " + row['ing_input'] + " with <b>" + row['ing_cs'] + "</b>."
+                    cs = "\n" + row['ing_cs']
                 if row['ing_sp'] == "NIL":
-                    SP = ""
+                    sp = ""
                 else:
-                    SP = "\n\nYou can make " + row['ing_input'] + " with <b>" + row['ing_sp'] + "</b>."
+                    sp = "\n" + row['ing_sp']
                 if row['ing_alt'] == "NIL":
-                    ALT = ""
+                    alt = ""
                 else:
-                    ALT = "\n\nYou can also entirely replace " + row['ing_input'] + " with <b>" + row['ing_alt'] + "</b>."
-                return TITLE + CS + SP + ALT
+                    alt = "\n" + row['ing_alt']
+                print(row['full_ing'] + cs + sp + alt)
 
-                break
         if searchFailure:
-            return "I'm sorry, I cannot find records for this ingredient. Please try again."
+            print("Ingredient cannot be found! Please try another one.")
