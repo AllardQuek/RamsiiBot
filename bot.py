@@ -20,7 +20,7 @@ from __future__ import print_function
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from pprint import pprint
-from commands import help_command, echo, trivia_command
+from commands import help_command, trivia_command
 from start_command import start
 
 
@@ -39,10 +39,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-# Define a few command handlers. These usually take the two arguments update and
-# context. Error handlers also receive the raised TelegramError object in error.
-
-
 def main():
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
@@ -58,9 +54,6 @@ def main():
     dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("trivia", trivia_command))
 
-
-    # on noncommand i.e message - echo the message on Telegram
-    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
 
     # Start the Bot
     updater.start_polling()
