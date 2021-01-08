@@ -18,9 +18,15 @@ logger = logging.getLogger(__name__)
 # Instantiate spoonacular api
 api_instance = sp.API("7622a72decf948a0b1fb094128e2f884")
 
-# def help_command(update: Update) -> None:
-#     """Send a message when the command /help is issued."""
-#     update.message.reply_text('Help!')
+def help_command(update: Update, context: CallbackContext) -> None:
+    """Send a message when the command /help is issued."""
+
+    command_options = """As the best MasterChef, there many things I can do.\n
+    ingredient substitutes\n
+    /trivia\n
+    /hungry\n
+    """
+    update.message.reply_text(command_options)
 
 
 def trivia_command(update: Update, context: CallbackContext) -> None:
@@ -85,6 +91,20 @@ def hungry_command(update: Update, context: CallbackContext) -> None:
 
         update.message.reply_text(f"This will satisfy your hunger!\n\n{title}: {url}")
         update.message.reply_photo(image)
+    except Exception as e:
+        print("Exception when calling DefaultApi->get_random_food_trivia: %s\n" % e)
+
+
+def joke_command(update: Update, context: CallbackContext) -> None:
+    """Return a random food joke."""
+    try:
+        # Get a random food joke
+        response = api_instance.get_a_random_food_joke()
+        data = response.json()
+        joke = data['text']
+        logger.info(f"Here is the response: {response}")
+
+        update.message.reply_text(joke)
     except Exception as e:
         print("Exception when calling DefaultApi->get_random_food_trivia: %s\n" % e)
 
