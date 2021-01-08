@@ -7,11 +7,10 @@
 
 from __future__ import print_function
 from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler, ConversationHandler, CallbackContext
 from pprint import pprint
-from commands import help_command, trivia_command, substitute, cancel
+from commands import help_command, trivia_command, substitute, end, update_rating
 from start_command import start
-
 
 import os
 import logging
@@ -38,17 +37,21 @@ def main():
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
 
-    # on different commands - answer in Telegram
+    # On different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler("start", start))
-    # dispatcher.add_handler(CommandHandler("help", help_command))
+    dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("trivia", trivia_command))
+    dispatcher.add_handler(CommandHandler("end", end))
+    updater.dispatcher.add_handler(CallbackQueryHandler(update_rating))
 
-    # Any other message: We treat as an ingredient substitution
+    # Any other message -> We treat as an ingredient substitution
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, substitute))
 
 
     # Start the Bot
     updater.start_polling()
+
+    # * For deploying to Heroku
     # updater.start_webhook(listen="0.0.0.0",
     #                       port=int(PORT),
     #                       url_path=TOKEN)
