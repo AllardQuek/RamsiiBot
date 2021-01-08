@@ -9,8 +9,8 @@ from __future__ import print_function
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler, ConversationHandler, CallbackContext
 from pprint import pprint
-from commands import help_command, trivia_command, random_command, substitute, end, update_rating
-from start_command import start
+from commands import trivia_command, hungry_command, substitute, end, update_rating
+from general_helpers import start
 
 import os
 import logging
@@ -32,9 +32,8 @@ def main():
 
     # On different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("trivia", trivia_command))
-    dispatcher.add_handler(CommandHandler("random", random_command))
+    dispatcher.add_handler(CommandHandler("hungry", hungry_command))
     dispatcher.add_handler(CommandHandler("end", end))
     updater.dispatcher.add_handler(CallbackQueryHandler(update_rating))
 
