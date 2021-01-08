@@ -1,3 +1,5 @@
 .vscode/
 venv/
 config.json
+.idea/
+__pycache__/
