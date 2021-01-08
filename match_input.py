@@ -20,7 +20,11 @@ def user_search(user_input):
                 TITLE = "<b><u>" + row['full_ing'].upper() + "</u></b>"
                 PERCENTAGE_RATING = str(percentage_rating(user_input))
                 SEPARATOR = "\n\n\n---------------------\n\n"
-                USER_RATING = "<b>" + PERCENTAGE_RATING + "%</b> of users found this information useful."
+                USER_RATING = ""
+                if PERCENTAGE_RATING == "0":
+                    USER_RATING = "No users found this information useful."
+                else:
+                    USER_RATING = "<b>" + PERCENTAGE_RATING + "%</b> of users found this information useful."
 
                 if row['ing_cs'] == "NIL":
                     CS = ""

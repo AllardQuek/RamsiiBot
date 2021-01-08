@@ -58,7 +58,9 @@ def percentage_rating(user_input):
             if user_input.lower() == row['ing_input']:
                 NO_OF_RATINGS = int(row['rating'])
                 NO_OF_RATERS = int(row['raters'])
-                PERCENTAGE = (NO_OF_RATINGS/NO_OF_RATERS) * 100
-        return round(PERCENTAGE, 1)
-
+                try:
+                    PERCENTAGE = (NO_OF_RATINGS/NO_OF_RATERS) * 100
+                except ZeroDivisionError:
+                    PERCENTAGE = 0
+        return PERCENTAGE
 
