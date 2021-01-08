@@ -15,11 +15,18 @@ Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
 
+
+from __future__ import print_function
 import logging
 
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from pprint import pprint
 import os
+import spoonacular as sp
+
+
+api_instance = sp.API("7622a72decf948a0b1fb094128e2f884")
 
 
 PORT = int(os.environ.get('PORT', 5000))
@@ -45,9 +52,17 @@ def help_command(update: Update, context: CallbackContext) -> None:
     update.message.reply_text('Help!')
 
 
-def music_command(update: Update, context: CallbackContext) -> None:
-    """Send a song recommendation."""
-    update.message.reply_text('Let me get you a song in just a moment!')
+def trivia_command(update: Update, context: CallbackContext) -> None:
+    """Return a random food trivia."""
+    try:
+        # Get Random Food Trivia
+        api_response = api_instance.get_random_food_trivia()
+        result = api_response.json()['text']
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->get_random_food_trivia: %s\n" % e)
+
+    update.message.reply_text(result)
 
 
 def echo(update: Update, context: CallbackContext) -> None:
@@ -68,7 +83,8 @@ def main():
     # on different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
-    dispatcher.add_handler(CommandHandler("music", music_command))
+    dispatcher.add_handler(CommandHandler("trivia", trivia_command))
+
 
     # on noncommand i.e message - echo the message on Telegram
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
