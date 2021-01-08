@@ -18,9 +18,9 @@ logger = logging.getLogger(__name__)
 # Instantiate spoonacular api
 api_instance = sp.API("7622a72decf948a0b1fb094128e2f884")
 
-def help_command(update: Update, context: CallbackContext) -> None:
-    """Send a message when the command /help is issued."""
-    update.message.reply_text('Help!')
+# def help_command(update: Update) -> None:
+#     """Send a message when the command /help is issued."""
+#     update.message.reply_text('Help!')
 
 
 def trivia_command(update: Update, context: CallbackContext) -> None:
@@ -38,14 +38,12 @@ def trivia_command(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(result)
 
 
-def substitute(update: Update, context: CallbackContext) -> None:       
+def substitute(update: Update, context: CallbackContext) -> None:
     """Return ingredient substitute(s)."""
     ingredient = update.message.text
     logger.info(f"Going to get {ingredient} substitutes...")
-
     # Query sqlite database for substitute(s)
     sub = user_search(ingredient)
-
     # * TODO: Ask user for rating
     # STEP 1: Query database to check if user has already rated
     user = update.message.from_user
@@ -73,7 +71,6 @@ def substitute(update: Update, context: CallbackContext) -> None:
 def update_rating(update: Update, context: CallbackContext) -> None:
     """Update database with user's usefulness rating."""
     query = update.callback_query
-
     # CallbackQueries need to be answered, even if no notification to the user is needed
     # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
     query.answer()
@@ -88,6 +85,8 @@ def update_rating(update: Update, context: CallbackContext) -> None:
         ingredient = " ".join(reply_list[2:])
 
     # Reply with what the user selected
+    reply_markup = InlineKeyboardMarkup([])
+    query.edit_message_reply_markup(reply_markup)
     query.message.reply_text(text=f"Thank you for your feedback! You selected: {usefulness}")
 
     user = query.from_user
