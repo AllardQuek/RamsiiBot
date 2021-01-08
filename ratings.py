@@ -5,7 +5,7 @@ engine = create_engine('sqlite:///ingredient_list.db')  # Access ingredient list
 
 def check_rating(user_id, user_input):
     """Check if user has already rated an ingredient substitution."""
-    ALREADY_RATED = False  # determines whether the inline keyboard for ratings appear or not
+    ALREADY_RATED = False  # Determines whether the inline keyboard for ratings appear or not
 
     with engine.connect() as connection:
         # Searches each row of the db to access the relevant data
