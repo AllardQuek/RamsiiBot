@@ -29,7 +29,7 @@ def trivia_command(update: Update, context: CallbackContext) -> None:
         # Get Random Food Trivia
         api_response = api_instance.get_random_food_trivia()
         result = api_response.json()['text']
-        logging.info(f"Here is the result: {result}")
+        logger.info(f"Here is the result: {result}")
 
         return update.message.reply_text(result)
     except Exception as e:
@@ -40,15 +40,16 @@ def trivia_command(update: Update, context: CallbackContext) -> None:
 
 def substitute(update: Update, context: CallbackContext) -> None:
     """Return ingredient substitute(s)."""
-    ingredient = update.message.text
+    ingredient = update.message.text         # String
+    user_id = update.message.from_user.id    # Integer
+
     logger.info(f"Going to get {ingredient} substitutes...")
     # Query sqlite database for substitute(s)
     sub = user_search(ingredient)
     # * TODO: Ask user for rating
     # STEP 1: Query database to check if user has already rated
-    user = update.message.from_user
-    rated = ratings.check_rating(str(user.id), str(ingredient))     # TODO: Check if data type change required
-
+    rated = ratings.check_rating(str(user_id), ingredient)     
+    
     # STEP 2A: If rated already
     if rated == True:
         # Return formatted response
@@ -89,15 +90,15 @@ def update_rating(update: Update, context: CallbackContext) -> None:
     query.edit_message_reply_markup(reply_markup)
     query.message.reply_text(text=f"Thank you for your feedback! You selected: {usefulness}")
 
-    user = query.from_user
+    user_id = query.from_user.id    # Integer
 
     # Update the database with user's rating
     if usefulness == "Useful":
         logger.info("Adding positive rating...")
-        ratings.positive_rating(str(user.id), str(ingredient))      # TODO: Check if data type change required
+        ratings.positive_rating(str(user_id), ingredient)      
     else:
         logger.info("Adding negative rating...")
-        ratings.negative_rating(str(user.id), str(ingredient))
+        ratings.negative_rating(str(user_id), ingredient)
 
 
 def end(update: Update, context: CallbackContext) -> int:

@@ -19,13 +19,6 @@ import logging
 PORT = int(os.environ.get('PORT', 5000))
 TOKEN = "1496622121:AAH90cjwm_Og9oPuWenRmS0peC4TRKxBMNs"
 
-# Enable logging
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
-)
-
-logger = logging.getLogger(__name__)
-
 
 def main():
     """Start the bot."""
