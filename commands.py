@@ -28,7 +28,7 @@ def help_command(update: Update, context: CallbackContext) -> None:
 def trivia_command(update: Update, context: CallbackContext) -> None:
     """Return a random food trivia."""
     try:
-        # Get Random Food Trivia
+        # Get Random food trivia
         api_response = api_instance.get_random_food_trivia()
         result = api_response.json()['text']
         logger.info(f"Here is the result: {result}")
