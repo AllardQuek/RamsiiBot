@@ -42,5 +42,3 @@ def negative_rating(user_id, ing):
             if ing.lower() == row['ing_input']:
                 CURRENT_RATER_NUMBER = int(row['raters']) + 1
                 connection.execute(f"update ingredient_substitution set raters={CURRENT_RATER_NUMBER} where id={row['id']}")
-
-print(check_rating("123",'arrowroot'))
