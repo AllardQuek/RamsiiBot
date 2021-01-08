@@ -21,7 +21,7 @@ api_instance = sp.API("7622a72decf948a0b1fb094128e2f884")
 def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
 
-    command_options = "As the best MasterChef, there many things I can do. Try me:\n\nsubstitute: Give me an ingredient.\n/trivia: Educate yourself.\n/hungry: Satisfy your hunger.\n/joke: Have a laugh!"
+    command_options = "As the best MasterChef, there many things I can do. Try me:\n\nsubstitute: Where's the LAMB SAUCE?\n/trivia: Don't be an idiot sandwich.\n/hungry: Satisfy your hunger.\n/joke: Have a laugh!"
     update.message.reply_text(command_options)
 
 
@@ -139,8 +139,9 @@ def update_rating(update: Update, context: CallbackContext) -> None:
 
 def end(update: Update, context: CallbackContext) -> int:
     """/end will say bye if user wants to end the session."""
-
     # TODO: Tell bot to stop listening for input
     user = update.message.from_user
     logger.info("User %s canceled the conversation.", user.first_name)
-    update.message.reply_text('Bye! See you again 😃')
+
+    # https://giphy.com/gifs/foxtv-gordon-ramsay-hells-kitchen-f-off-ylyUQnaWJp7TRAGInK
+    update.message.reply_video("https://media.giphy.com/media/ylyUQnaWJp7TRAGInK/giphy.mp4")
