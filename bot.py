@@ -24,7 +24,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Callb
 from pprint import pprint
 import os
 import spoonacular as sp
-
+from help_command import help_command
 
 api_instance = sp.API("7622a72decf948a0b1fb094128e2f884")
 
@@ -53,12 +53,6 @@ def start(update: Update, context: CallbackContext) -> None:
     """
 
     update.message.reply_text(intro)              
-
-
-def help_command(update: Update, context: CallbackContext) -> None:
-    """Send a message when the command /help is issued."""
-    update.message.reply_text('Help!')
-
 
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
