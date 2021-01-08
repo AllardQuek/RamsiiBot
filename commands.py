@@ -1,9 +1,9 @@
-from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update, ParseMode
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext
+from telegram import Update, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler, ConversationHandler, CallbackContext
 
 import spoonacular as sp
 import logging
-from match_input import userSearch
+from match_input import user_search
 
 
 # Enable logging
@@ -39,22 +39,55 @@ def trivia_command(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(result)
 
 
-def substitute(update: Update, context: CallbackContext) -> None:       # Query sqlite database for substitute(s)
+def substitute(update: Update, context: CallbackContext) -> None:       
     """Return ingredient substitute(s)."""
     ingredient = update.message.text
     logger.info(f"Going to get {ingredient} substitutes...")
-    update.message.reply_text(text=userSearch(f"{ingredient}"), parse_mode= ParseMode.HTML)
+
+    # Query sqlite database for substitute(s)
+    sub = user_search(ingredient)
+
+    # Return formatted response
+
+    # TODO: Ask user for rating
+    # * STEP 1: Query database to check if user has already rated
+
+    # * STEP 2A: If rated already
+    # if check_rating == True:
+    # update.message.reply_text(text=sub, parse_mode = ParseMode.HTML)
+
+    # * STEP 2B: Else haven't rated
+    keyboard = [
+        [
+            InlineKeyboardButton("Useful", callback_data="Useful"),
+            InlineKeyboardButton("Not Useful", callback_data="Not Useful"),
+        ],
+    ]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    update.message.reply_text(sub, parse_mode = ParseMode.HTML, reply_markup=reply_markup) 
 
 
-    # TODO: Return formatted response
+def update_rating(update: Update, context: CallbackContext) -> None:
+    """Update database with user's usefulness rating."""
+    query = update.callback_query
+
+    # CallbackQueries need to be answered, even if no notification to the user is needed
+    # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
+    query.answer()
+    reply = query.data
+
+    # Reply with what the user selected
+    query.edit_message_text(text=f"Selected option: {reply}")
+
+    # TODO: Update the database with user's rating
 
 
-def cancel(update: Update, context: CallbackContext) -> int:
-    # TODO: Type /cancel to stop conversation by saying 'Bye'
+def end(update: Update, context: CallbackContext) -> int:
+    """/end will say bye if user wants to end the session."""
+
+    # TODO: Tell bot to stop listening for input
     user = update.message.from_user
     logger.info("User %s canceled the conversation.", user.first_name)
-    update.message.reply_text(
-        'Bye! See you again 😃', reply_markup=ReplyKeyboardRemove()
-    )
-
-    return ConversationHandler.END
+    update.message.reply_text('Bye! See you again 😃')
