@@ -22,17 +22,17 @@ def user_search(user_input):
                 if row['ing_cs'] == "NIL":
                     CS = ""
                 else:
-                    CS = "\n\nYou can closely substitute " + row['ing_input'] + " with <b>" + row['ing_cs'] + "</b>."
+                    CS = "\n\nYou can closely substitute " + row['orig_unit'] + " " + row['ing_input'] + " with <b>" + row['ing_cs'] + "</b>."
                 
                 if row['ing_sp'] == "NIL":
                     SP = ""
                 else:
-                    SP = "\n\nYou can make " + row['ing_input'] + " with <b>" + row['ing_sp'] + "</b>."
+                    SP = "\n\nYou can make " + row['orig_unit'] + " " + row['ing_input'] + " with <b>" + row['ing_sp'] + "</b>."
                 
                 if row['ing_alt'] == "NIL":
                     ALT = ""
                 else:
-                    ALT = "\n\nYou can entirely replace " + row['ing_input'] + " with <b>" + row['ing_alt'] + "</b>."
+                    ALT = "\n\nYou can entirely replace " + row['orig_unit'] + " " + row['ing_input'] + " with <b>" + row['ing_alt'] + "</b>."
                 
                 if row['isVegan'] == 'Yes':
                     VEG = "\n<i>Vegan</i>"

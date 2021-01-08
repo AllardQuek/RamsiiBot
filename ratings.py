@@ -13,7 +13,6 @@ def check_rating(user_id, user_input):
         for row in result:
             if user_id == row['id'] and user_input == row['rated_ing']:
                 ALREADY_RATED = True
-        print(ALREADY_RATED)
         return ALREADY_RATED
 
 
@@ -45,3 +44,7 @@ def negative_rating(user_id, ing):
             if ing.lower() == row['ing_input']:
                 CURRENT_RATER_NUMBER = int(row['raters']) + 1
                 connection.execute(f"update ingredient_substitution set raters={CURRENT_RATER_NUMBER} where id={row['id']}")
+
+# def percentage_rating():
+#     with engine.connect() as connection:
+
