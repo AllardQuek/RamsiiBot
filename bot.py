@@ -15,11 +15,11 @@ Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
 
+from __future__ import print_function
 import logging
 
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
-from __future__ import print_function
 from pprint import pprint
 import os
 import spoonacular as sp
@@ -59,7 +59,7 @@ def trivia_command(update: Update, context: CallbackContext) -> None:
         pprint(api_response)
     except Exception as e:
         print("Exception when calling DefaultApi->get_random_food_trivia: %s\n" % e)
-        
+
     update.message.reply_text(api_response)
 
 
