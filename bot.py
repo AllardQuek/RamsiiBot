@@ -57,11 +57,12 @@ def trivia_command(update: Update, context: CallbackContext) -> None:
     try:
         # Get Random Food Trivia
         api_response = api_instance.get_random_food_trivia()
+        result = api_response.json()['text']
         pprint(api_response)
     except Exception as e:
         print("Exception when calling DefaultApi->get_random_food_trivia: %s\n" % e)
 
-    update.message.reply_text(api_response)
+    update.message.reply_text(result)
 
 
 def echo(update: Update, context: CallbackContext) -> None:
