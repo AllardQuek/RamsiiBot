@@ -1,10 +1,10 @@
-from telegram import Update, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler, ConversationHandler, CallbackContext
+from match_input import user_search
 
-import spoonacular as sp
 import logging
 import ratings
-from match_input import user_search
+import spoonacular as sp
 
 
 # Enable logging
@@ -49,7 +49,7 @@ def substitute(update: Update, context: CallbackContext) -> None:
     # * TODO: Ask user for rating
     # STEP 1: Query database to check if user has already rated
     user = update.message.from_user
-    rated = ratings.check_rating(str(user.id), str(ingredient))
+    rated = ratings.check_rating(str(user.id), str(ingredient))     # TODO: Check if data type change required
 
     # STEP 2A: If rated already
     if rated == True:
@@ -68,7 +68,7 @@ def substitute(update: Update, context: CallbackContext) -> None:
 
         # Return formatted response with ratings
         update.message.reply_text(sub, parse_mode = ParseMode.HTML, reply_markup=reply_markup) 
-
+    
 
 def update_rating(update: Update, context: CallbackContext) -> None:
     """Update database with user's usefulness rating."""
@@ -78,6 +78,8 @@ def update_rating(update: Update, context: CallbackContext) -> None:
     # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
     query.answer()
     reply_list = query.data.split()
+
+    # Extract callback data: usefulness and ingredient
     if reply_list[0] == "Useful":
         usefulness = "Useful"
         ingredient = " ".join(reply_list[1:])
@@ -86,13 +88,14 @@ def update_rating(update: Update, context: CallbackContext) -> None:
         ingredient = " ".join(reply_list[2:])
 
     # Reply with what the user selected
-    query.edit_message_text(text=f"Thank you for your feedback! You selected: {usefulness}")
+    query.message.reply_text(text=f"Thank you for your feedback! You selected: {usefulness}")
+
     user = query.from_user
 
     # Update the database with user's rating
     if usefulness == "Useful":
         logger.info("Adding positive rating...")
-        ratings.positive_rating(str(user.id), str(ingredient))
+        ratings.positive_rating(str(user.id), str(ingredient))      # TODO: Check if data type change required
     else:
         logger.info("Adding negative rating...")
         ratings.negative_rating(str(user.id), str(ingredient))

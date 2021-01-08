@@ -90,3 +90,8 @@ return Updater.stop()
     )
 
     return ConversationHandler.END
+
+    ===
+
+    query.edit_message_reply_markup(ReplyKeyboardRemove())
+    query.edit_message_text(text=sub)
