@@ -44,12 +44,10 @@ def substitute(update: Update, context: CallbackContext) -> None:
     """Return ingredient substitute(s)."""
     ingredient = update.message.text         # String
     user_id = update.message.from_user.id    # Integer
-
     logger.info(f"Going to get {ingredient} substitutes...")
+
     # Query sqlite database for substitute(s)
     sub = user_search(ingredient)
-    # * TODO: Ask user for rating
-    # STEP 1: Query database to check if user has already rated
 
     if not sub:
         # If sub turns out to be the empty string, means we found no results from our database
@@ -59,7 +57,7 @@ def substitute(update: Update, context: CallbackContext) -> None:
         # Reply to user and exit from function
         return      
 
-    # If we did get a result from our database, check if user has already rated it
+    # If we did get a result from our database, query db to check if user has already rated it
     rated = ratings.check_rating(str(user_id), ingredient)     
     
     if rated == True:
