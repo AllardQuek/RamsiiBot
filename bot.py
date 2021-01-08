@@ -24,7 +24,8 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Callb
 from pprint import pprint
 import os
 import spoonacular as sp
-from commands import help_command
+from commands import help_command, echo, trivia_command
+from start_command import start
 
 api_instance = sp.API("7622a72decf948a0b1fb094128e2f884")
 
@@ -42,34 +43,6 @@ logger = logging.getLogger(__name__)
 
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
-def start(update: Update, context: CallbackContext) -> None:
-    """Send a message when the command /start is issued."""
-    username = update.message.chat.username
-
-    intro = f"""
-        Hi {username}! I'm Ramsay, the best chef in the world with 7 Michelin stars! 
-        Missing an ingredient for your recipe? Let me find you a substitute right away!
-        Or if you're bored, try /trivia to get a random trivia!
-    """
-
-    update.message.reply_text(intro)              
-
-def echo(update: Update, context: CallbackContext) -> None:
-    """Echo the user message."""
-    update.message.reply_text(update.message.text)
-
-
-def trivia_command(update: Update, context: CallbackContext) -> None:
-    """Return a random food trivia."""
-    try:
-        # Get Random Food Trivia
-        api_response = api_instance.get_random_food_trivia()
-        result = api_response.json()['text']
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->get_random_food_trivia: %s\n" % e)
-
-    update.message.reply_text(result)
 
 
 def main():
