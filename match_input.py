@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-
+from ratings import percentage_rating
 
 engine = create_engine('sqlite:///ingredient_list.db')      # Access ingredient list
 
@@ -18,6 +18,9 @@ def user_search(user_input):
             if user_input.lower() == row['ing_input']:				
                 search_failure = False
                 TITLE = "<b><u>" + row['full_ing'].upper() + "</u></b>"
+                PERCENTAGE_RATING = str(percentage_rating(user_input))
+                SEPARATOR = "\n\n\n---------------------\n\n"
+                USER_RATING = PERCENTAGE_RATING + "% of users found this information helpful."
 
                 if row['ing_cs'] == "NIL":
                     CS = ""
@@ -41,7 +44,7 @@ def user_search(user_input):
                 else:
                     VEG = "\n<i>May or may not be vegan</i>"
 
-                return TITLE + VEG + CS + SP + ALT
+                return TITLE + VEG + CS + SP + ALT + SEPARATOR + USER_RATING
 
         if search_failure:
             return "Ingredient cannot be found! Please try again."

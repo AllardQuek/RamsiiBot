@@ -18,7 +18,6 @@ import logging
 
 PORT = int(os.environ.get('PORT', 5000))
 TOKEN = "1496622121:AAH90cjwm_Og9oPuWenRmS0peC4TRKxBMNs"
-# TOKEN = "1194072377:AAFlyOFCsubC_G5zhQAGfzeHfyvUrMuKxzk"
 
 # Enable logging
 logging.basicConfig(
