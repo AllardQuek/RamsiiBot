@@ -20,7 +20,7 @@ from __future__ import print_function
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from pprint import pprint
-from commands import help_command, echo, trivia_command
+from commands import help_command, trivia_command
 from start_command import start
 
 import os
