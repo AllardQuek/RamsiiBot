@@ -21,7 +21,7 @@ api_instance = sp.API("7622a72decf948a0b1fb094128e2f884")
 def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
 
-    command_options = "As the best MasterChef, there many things I can do. Try me:\n\nsubstitute: Where's the LAMB SAUCE?\n/trivia: Don't be an idiot sandwich.\n/hungry: Satisfy your hunger.\n/joke: Have a laugh!"
+    command_options = "As the best MasterChef, there many things I can do. Try me:\n\nsubstitute: Where's the LAMB SAUCE?\n/trivia: Don't be an idiot sandwich.\n/hungry: Freakin' delicious.\n/joke: Very funny!"
     update.message.reply_text(command_options)
 
 
