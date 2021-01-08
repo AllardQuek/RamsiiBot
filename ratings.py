@@ -1,9 +1,10 @@
 from sqlalchemy import create_engine, insert, text
 
-engine = create_engine('sqlite:///ingredient_list.db')  # accesses ingredient list
 
+engine = create_engine('sqlite:///ingredient_list.db')  # Access ingredient list
 
 def check_rating(user_id, user_input):
+    """Check if user has already rated an ingredient substitution."""
     ALREADY_RATED = False  # determines whether the inline keyboard for ratings appear or not
     with engine.connect() as connection:
         # Searches each row of the db to access the relevant data
@@ -17,6 +18,7 @@ def check_rating(user_id, user_input):
 
 
 def positive_rating(user_id, ing):
+    """Update database with positive rating for user."""
     with engine.connect() as connection:
         # Searches each row of the db to access the relevant data
         ins_data = {"id": user_id, "rated_ing": ing}
@@ -32,6 +34,7 @@ def positive_rating(user_id, ing):
 
 
 def negative_rating(user_id, ing):
+    """Update database with negative rating for user."""
     with engine.connect() as connection:
         # Searches each row of the db to access the relevant data
         ins_data = {"id": user_id, "rated_ing": ing}

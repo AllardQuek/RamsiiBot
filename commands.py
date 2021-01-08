@@ -3,6 +3,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Callb
 
 import spoonacular as sp
 import logging
+import ratings
 from match_input import user_search
 
 
@@ -45,26 +46,28 @@ def substitute(update: Update, context: CallbackContext) -> None:
     # Query sqlite database for substitute(s)
     sub = user_search(ingredient)
 
-    # Return formatted response
-
     # * TODO: Ask user for rating
     # TODO STEP 1: Query database to check if user has already rated
+    user = update.message.from_user
+    rated = ratings.check_rating(user.id, ingredient)
 
     # TODO STEP 2A: If rated already
-    # if check_rating == True:
-    # update.message.reply_text(text=sub, parse_mode = ParseMode.HTML)
+    if rated == True:
+        # Return formatted response
+        update.message.reply_text(text=sub, parse_mode = ParseMode.HTML)
+    else:
+        # TODO STEP 2B: Else haven't rated
+        keyboard = [
+            [
+                InlineKeyboardButton("Useful", callback_data=f"Useful {ingredient}"),
+                InlineKeyboardButton("Not Useful", callback_data=f"Not Useful {ingredient}"),
+            ],
+        ]
 
-    # * STEP 2B: Else haven't rated
-    keyboard = [
-        [
-            InlineKeyboardButton("Useful", callback_data="Useful"),
-            InlineKeyboardButton("Not Useful", callback_data="Not Useful"),
-        ],
-    ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
 
-    reply_markup = InlineKeyboardMarkup(keyboard)
-
-    update.message.reply_text(sub, parse_mode = ParseMode.HTML, reply_markup=reply_markup) 
+        # Return formatted response with ratings
+        update.message.reply_text(sub, parse_mode = ParseMode.HTML, reply_markup=reply_markup) 
 
 
 def update_rating(update: Update, context: CallbackContext) -> None:
@@ -74,12 +77,21 @@ def update_rating(update: Update, context: CallbackContext) -> None:
     # CallbackQueries need to be answered, even if no notification to the user is needed
     # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
     query.answer()
-    reply = query.data
+    reply_list = query.data.split()
+    usefulness = reply_list[0]
 
     # Reply with what the user selected
-    query.edit_message_text(text=f"Selected option: {reply}")
+    query.edit_message_text(text=f"Thank you for your feedback! You selected: {usefulness}")
+    user = query.from_user
 
     # TODO: Update the database with user's rating
+    if usefulness == "Useful":
+        logger.info("Adding positive rating...")
+        ratings.positive_rating(user.id, reply_list[1])
+    else:
+        logger.info("Adding negative rating...")
+        ratings.negative_rating(user.id, reply_list[1])
+    
 
 
 def end(update: Update, context: CallbackContext) -> int:

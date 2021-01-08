@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 
-engine = create_engine('sqlite:///ingredient_list.db')  # accesses ingredient list
 
+engine = create_engine('sqlite:///ingredient_list.db')      # Access ingredient list
 
 def user_search(user_input):
     with engine.connect() as connection:
