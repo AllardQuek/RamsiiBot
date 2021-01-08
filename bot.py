@@ -18,9 +18,9 @@ bot.
 
 from __future__ import print_function
 from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext
 from pprint import pprint
-from commands import help_command, trivia_command
+from commands import help_command, trivia_command, substitute, cancel
 from start_command import start
 
 import os
@@ -52,6 +52,9 @@ def main():
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("trivia", trivia_command))
+
+    # Any other message: We treat as an ingredient substitution
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, substitute))
 
 
     # Start the Bot

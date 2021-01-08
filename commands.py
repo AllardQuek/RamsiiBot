@@ -1,8 +1,18 @@
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler, CallbackContext
 
 import spoonacular as sp
 import logging
+
+
+# Enable logging
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
+)
+
+logger = logging.getLogger(__name__)
+
+GETTING_INGREDIENT = range(1)
 
 
 # Instantiate spoonacular api
@@ -13,7 +23,7 @@ api_instance = sp.API("7622a72decf948a0b1fb094128e2f884")
 def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
     update.message.reply_text('Help!')
-    
+
 
 def trivia_command(update: Update, context: CallbackContext) -> None:
     """Return a random food trivia."""
@@ -28,3 +38,27 @@ def trivia_command(update: Update, context: CallbackContext) -> None:
         print("Exception when calling DefaultApi->get_random_food_trivia: %s\n" % e)
 
     update.message.reply_text(result)
+    return GETTING_INGREDIENT
+
+
+def substitute(update: Update, context: CallbackContext) -> None:
+    """Echo the user message."""
+    ingredient = update.message.text
+    logger.info(f"Going to get {ingredient} substitutes...")
+    update.message.reply_text(f"You asked for {ingredient} substitutes.")
+
+    # TODO: Query sqllite database for substitute(s)
+
+
+    # TODO: Return formatted response
+
+
+def cancel(update: Update, context: CallbackContext) -> int:
+    # TODO: Type /cancel to stop conversation by saying 'Bye'
+    user = update.message.from_user
+    logger.info("User %s canceled the conversation.", user.first_name)
+    update.message.reply_text(
+        'Bye! See you again 😃', reply_markup=ReplyKeyboardRemove()
+    )
+
+    return ConversationHandler.END
