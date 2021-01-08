@@ -49,10 +49,10 @@ def substitute(update: Update, context: CallbackContext) -> None:
 
     # Return formatted response
 
-    # TODO: Ask user for rating
-    # * STEP 1: Query database to check if user has already rated
+    # * TODO: Ask user for rating
+    # TODO STEP 1: Query database to check if user has already rated
 
-    # * STEP 2A: If rated already
+    # TODO STEP 2A: If rated already
     # if check_rating == True:
     # update.message.reply_text(text=sub, parse_mode = ParseMode.HTML)
 
