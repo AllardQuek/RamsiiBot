@@ -43,7 +43,7 @@ def main():
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, substitute))
 
 
-    # Start the Bot
+    # Start the Bot - for easier testing
     # updater.start_polling()
 
     # * For deploying to Heroku

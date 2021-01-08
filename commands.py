@@ -14,9 +14,9 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-
 # Instantiate spoonacular api
 api_instance = sp.API("7622a72decf948a0b1fb094128e2f884")
+
 
 def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""

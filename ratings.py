@@ -47,6 +47,7 @@ def negative_rating(user_id, ing):
                 CURRENT_RATER_NUMBER = int(row['raters']) + 1
                 connection.execute(f"update ingredient_substitution set raters={CURRENT_RATER_NUMBER} where id={row['id']}")
 
+
 def percentage_rating(user_input):
     with engine.connect() as connection:
         result = connection.execute("select * from ingredient_substitution")
