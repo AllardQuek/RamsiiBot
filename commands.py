@@ -12,8 +12,6 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-GETTING_INGREDIENT = range(1)
-
 
 # Instantiate spoonacular api
 api_instance = sp.API("7622a72decf948a0b1fb094128e2f884")
@@ -38,7 +36,6 @@ def trivia_command(update: Update, context: CallbackContext) -> None:
         print("Exception when calling DefaultApi->get_random_food_trivia: %s\n" % e)
 
     update.message.reply_text(result)
-    return GETTING_INGREDIENT
 
 
 def substitute(update: Update, context: CallbackContext) -> None:
