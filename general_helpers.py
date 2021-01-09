@@ -80,5 +80,3 @@ def user_search(user_input):
 #         suggestion_entry = {"id": user_id, "category": category, "suggestions": user_suggestion}
 #         ins_statement = text("""insert into suggestions(id, category, suggestions) values(:id, :category, :suggestions)""")
 #         connection.execute(ins_statement, **suggestion_entry)
-#
-#
