@@ -1,6 +1,6 @@
 # Ramsii Bot 👨‍
 
-**_Want to cook but missing an ingredient? Ask Ramsay!_**
+**_Want to cook but missing an ingredient? Ask Ramsii!_**
 
 ## Inspiration
 As cash-strapped students who cook from time to time, we've always struggled with the disappointment of not being able to prepare a dish simply because we were missing 1 or 2 ingredients for a recipe. If only we could find substitutes for them!
