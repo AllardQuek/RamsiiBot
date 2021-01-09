@@ -1,6 +1,8 @@
 # RamsiiBot 👨‍🍳
 
-**_Want to cook but missing an ingredient? Ask [Ramsii](https://devpost.com/software/substitute-ramsay)!_**
+**_Want to cook but missing an ingredient? Ask [Ramsii](https://t.me/RamsiiBot)!_**
+
+Read on to see what Ramsii offers and check out our Devpost submission [here](https://devpost.com/software/substitute-ramsay)
 
 ## Inspiration
 As cash-strapped students who cook from time to time, we've always struggled with the disappointment of not being able to prepare a dish simply because we were missing 1 or 2 ingredients for a recipe. If only we could find substitutes for them!
