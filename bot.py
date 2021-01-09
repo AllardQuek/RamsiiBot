@@ -18,17 +18,18 @@ import logging
 import json
 
 
+with open('config.json', 'r') as f:
+	    config = json.load(f)
+
+    PORT = int(os.environ.get('PORT', 5000))    # * For deploying to Heroku
+    TOKEN = config['telegram_bot_token']
+
+
 def main():
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
     # Post version 12 this will no longer be necessary
-    with open('config.json', 'r') as f:
-	    config = json.load(f)
-
-    PORT = int(os.environ.get('PORT', 5000))    # * For deploying to Heroku
-    TOKEN = config['telegram_bot_token']
-    
     updater = Updater(TOKEN, use_context=True)
 
     # Get the dispatcher to register handlers
