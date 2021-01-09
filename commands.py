@@ -1,6 +1,7 @@
 from telegram import Update, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler, ConversationHandler, CallbackContext
 from general_helpers import user_search
+from threading import Thread
 
 import logging
 import ratings
@@ -140,14 +141,15 @@ def update_rating(update: Update, context: CallbackContext) -> None:
         ratings.negative_rating(str(user_id), ingredient)
 
 
-def end(update: Update, context: CallbackContext) -> int:
-    """/end will say bye if user wants to end the session."""
-    # TODO: Tell bot to stop listening for input
-    user = update.message.from_user
-    logger.info("User %s canceled the conversation.", user.first_name)
+# def end(update: Update, context: CallbackContext) -> int:
+#     """/end will say bye if user wants to end the session."""
+#     # TODO: Tell bot to stop listening for input
+#     user = update.message.from_user
+#     logger.info("User %s canceled the conversation.", user.first_name)
 
-    # https://giphy.com/gifs/foxtv-gordon-ramsay-hells-kitchen-f-off-ylyUQnaWJp7TRAGInK
-    update.message.reply_video("https://media.giphy.com/media/ylyUQnaWJp7TRAGInK/giphy.mp4")
+#     # https://giphy.com/gifs/foxtv-gordon-ramsay-hells-kitchen-f-off-ylyUQnaWJp7TRAGInK
+#     update.message.reply_video("https://media.giphy.com/media/ylyUQnaWJp7TRAGInK/giphy.mp4")
+#     Thread(target=stop_and_restart).start()
 
 
 # TODO: Add user suggestions to our database

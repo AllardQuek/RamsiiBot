@@ -10,12 +10,14 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, \
                          CallbackQueryHandler, ConversationHandler, CallbackContext
 from pprint import pprint
 from commands import help_command, trivia_command, hungry_command, joke_command, \
-                     substitute, end, update_rating
+                     substitute, update_rating
 from general_helpers import start
+from threading import Thread
 
 import os
 import logging
 import json
+import sys
 
 
 with open('config.json', 'r') as f:
@@ -34,6 +36,14 @@ def main():
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
+
+    # For stopping the bot
+    def end(update: Update, context: CallbackContext) -> int:
+        """/end will say bye if user wants to end the session."""
+        update.message.reply_video("https://media.giphy.com/media/ylyUQnaWJp7TRAGInK/giphy.mp4")
+        updater.stop()
+        os.execl(sys.executable, sys.executable, *sys.argv)
+
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("trivia", trivia_command))
@@ -46,13 +56,13 @@ def main():
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, substitute))
 
     # Start the Bot - for easier testing
-    updater.start_polling()
+    # updater.start_polling()
 
     # * For deploying to Heroku
-    # updater.start_webhook(listen="0.0.0.0",
-    #                       port=int(PORT),
-    #                       url_path=TOKEN)
-    # updater.bot.setWebhook('https://hacknroll-2021.herokuapp.com/' + TOKEN)
+    updater.start_webhook(listen="0.0.0.0",
+                          port=int(PORT),
+                          url_path=TOKEN)
+    updater.bot.setWebhook('https://hacknroll-2021.herokuapp.com/' + TOKEN)
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
