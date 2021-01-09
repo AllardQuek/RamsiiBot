@@ -21,7 +21,9 @@ import sys
 
 
 PORT = int(os.environ.get('PORT', 5000))    # * For deploying to Heroku
-TOKEN = os.getenv('TOKEN')                  # * To set the TOKEN environment variable: export TOKEN="<your_token>"
+TOKEN = os.getenv('TOKEN')                  # * To set the TOKEN environment variable
+                                            # Locally: export TOKEN="<your_token>"
+                                            # Heroku: heroku config:set TOKEN="<your_token"
 
 
 def main():
