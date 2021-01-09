@@ -74,6 +74,7 @@ def user_search(user_input):
         return ""
 
 
+# TODO: suggestions at failure state and not useful state
 # def suggestion(user_id, category, user_suggestion):
 #     with engine.connect() as connection:
 #         suggestion_entry = {"id": user_id, "category": category, "suggestions": user_suggestion}
@@ -81,4 +82,3 @@ def user_search(user_input):
 #         connection.execute(ins_statement, **suggestion_entry)
 #
 #
-# # TODO: suggestions at failure state and not useful state

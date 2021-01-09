@@ -6,25 +6,29 @@
 
 from __future__ import print_function
 from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler, ConversationHandler, \
-    CallbackContext
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, \
+                         CallbackQueryHandler, ConversationHandler, CallbackContext
 from pprint import pprint
-from commands import help_command, trivia_command, hungry_command, joke_command, substitute, end, \
-    update_rating
+from commands import help_command, trivia_command, hungry_command, joke_command, \
+                     substitute, end, update_rating
 from general_helpers import start
 
 import os
 import logging
+import json
 
-
-PORT = int(os.environ.get('PORT', 5000))
-TOKEN = "1496622121:AAH90cjwm_Og9oPuWenRmS0peC4TRKxBMNs"
 
 def main():
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
     # Post version 12 this will no longer be necessary
+    with open('config.json', 'r') as f:
+	    config = json.load(f)
+
+    PORT = int(os.environ.get('PORT', 5000))
+    TOKEN = config['telegram_bot_token']
+    
     updater = Updater(TOKEN, use_context=True)
 
     # Get the dispatcher to register handlers

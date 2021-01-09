@@ -21,7 +21,7 @@ def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
 
     command_options = "As your gastronomic companion, there many things I can do. You can use these anytime.\n\n<b>substitute</b> (Type an ingredient in chat): Where's the <i>LAMB SAUCE?</i>\n<b>/trivia</b>: Don't be an idiot sandwich.\n<b>/hungry</b>: It's delicious.\n<b>/joke</b>: Very funny!\n<b>/end</b>: **** me, what do you think?"
-    update.message.reply_text(command_options, parse_mode= ParseMode.HTML)
+    update.message.reply_text(command_options, parse_mode=ParseMode.HTML)
 
 
 def trivia_command(update: Update, context: CallbackContext) -> None:
@@ -32,11 +32,9 @@ def trivia_command(update: Update, context: CallbackContext) -> None:
         result = "Here's a touch of <b>Ramsii's knowledge</b> for you.\n\n" + api_response.json()['text']
         logger.info(f"Here is the result: {result}")
 
-        return update.message.reply_text(result)
+        update.message.reply_text(result, parse_mode=ParseMode.HTML)
     except Exception as e:
         print("Exception when calling DefaultApi->get_random_food_trivia: %s\n" % e)
-
-    update.message.reply_text(result)
 
 
 def substitute(update: Update, context: CallbackContext) -> None:
@@ -109,10 +107,6 @@ def joke_command(update: Update, context: CallbackContext) -> None:
         print("Exception when calling DefaultApi->get_random_food_trivia: %s\n" % e)
 
 
-# def suggest(update: Update, context: CallbackContext) -> None:
-#     update.message.reply_text(f"Type your suggestion below, and we will look into it.")
-
-
 def update_rating(update: Update, context: CallbackContext) -> None:
     """Update database with user's usefulness rating."""
     query = update.callback_query
@@ -154,3 +148,8 @@ def end(update: Update, context: CallbackContext) -> int:
 
     # https://giphy.com/gifs/foxtv-gordon-ramsay-hells-kitchen-f-off-ylyUQnaWJp7TRAGInK
     update.message.reply_video("https://media.giphy.com/media/ylyUQnaWJp7TRAGInK/giphy.mp4")
+
+
+# TODO: Add user suggestions to our database
+# def suggest(update: Update, context: CallbackContext) -> None:
+#     update.message.reply_text(f"Type your suggestion below, and we will look into it.")
