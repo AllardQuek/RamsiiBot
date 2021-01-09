@@ -1,6 +1,6 @@
 from telegram import Update, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler, ConversationHandler, CallbackContext
-from general_helpers import user_search, suggestion
+from general_helpers import user_search
 
 import logging
 import ratings
@@ -17,12 +17,11 @@ logger = logging.getLogger(__name__)
 # Instantiate spoonacular api
 api_instance = sp.API("7622a72decf948a0b1fb094128e2f884")
 
-
 def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
 
-    command_options = "As the best MasterChef, there many things I can do. Try me:\n\nsubstitute: Where's the LAMB SAUCE?\n/trivia: Don't be an idiot sandwich.\n/hungry: It's delicious.\n/joke: Very funny!\n/end: Sweet dreams."
-    update.message.reply_text(command_options)
+    command_options = "As your gastronomic companion, there many things I can do. You can use these anytime.\n\n<b>substitute</b> (Type an ingredient in chat): Where's the <i>LAMB SAUCE?</i>\n<b>/trivia</b>: Don't be an idiot sandwich.\n<b>/hungry</b>: It's delicious.\n<b>/joke</b>: Very funny!\n<b>/end</b>: **** me, what do you think?"
+    update.message.reply_text(command_options, parse_mode= ParseMode.HTML)
 
 
 def trivia_command(update: Update, context: CallbackContext) -> None:
@@ -30,7 +29,7 @@ def trivia_command(update: Update, context: CallbackContext) -> None:
     try:
         # Get Random food trivia
         api_response = api_instance.get_random_food_trivia()
-        result = api_response.json()['text']
+        result = "Here's a touch of <b>Ramsii's knowledge</b> for you.\n\n" + api_response.json()['text']
         logger.info(f"Here is the result: {result}")
 
         return update.message.reply_text(result)
@@ -50,16 +49,9 @@ def substitute(update: Update, context: CallbackContext) -> None:
     sub = user_search(ingredient)
 
     if not sub:
-        sug_keyboard = [
-            [
-                InlineKeyboardButton("Suggest Something New", callback_data="Suggest Something New"),
-            ],
-        ]
-
-        sug_reply_markup = InlineKeyboardMarkup(sug_keyboard)
         # If sub turns out to be the empty string, means we found no results from our database
-        sub = "Ingredient cannot be found! Please try again.\n\n Alternatively, you may click /suggest to suggest substitutions I don't know about!"
-        update.message.reply_text(sub, parse_mode=ParseMode.HTML, reply_markup=sug_reply_markup)
+        sub = "What <i>is</i> this? Try something else."
+        update.message.reply_text(sub, parse_mode=ParseMode.HTML)
 
         # Reply to user and exit from function
         return
@@ -70,7 +62,7 @@ def substitute(update: Update, context: CallbackContext) -> None:
     if rated == True:
         # Return results and prompt for next substitution
         update.message.reply_text(text=sub, parse_mode = ParseMode.HTML)
-        update.message.reply_text(text="What else do you want to substitute?")
+        update.message.reply_text(text="Right, what else do you want to substitute?")
     else:
         keyboard = [
             [
@@ -80,9 +72,8 @@ def substitute(update: Update, context: CallbackContext) -> None:
         ]
 
         reply_markup = InlineKeyboardMarkup(keyboard)
-
         # Return results and prompt user for usefulness rating with an in-line keyboard
-        update.message.reply_text(sub, parse_mode = ParseMode.HTML, reply_markup=reply_markup) 
+        update.message.reply_text(sub, parse_mode = ParseMode.HTML, reply_markup=reply_markup)
 
 
 def hungry_command(update: Update, context: CallbackContext) -> None:
@@ -94,11 +85,11 @@ def hungry_command(update: Update, context: CallbackContext) -> None:
         recipe_res = api_response.json()['recipes'][0]
         logger.info(f"Here is the response: {api_response}")
 
-        title = recipe_res['title']
+        title = recipe_res['title'].upper()
         image = recipe_res['image']
         url = recipe_res['spoonacularSourceUrl']
 
-        update.message.reply_text(f"This will satisfy your hunger!\n\n{title}: {url}")
+        update.message.reply_text(f"Gorgeous. Here's something for you to think about.\n\n<b>{title}</b> {url}", parse_mode=ParseMode.HTML)
         update.message.reply_photo(image)
     except Exception as e:
         print("Exception when calling DefaultApi->get_random_food_trivia: %s\n" % e)
@@ -118,12 +109,17 @@ def joke_command(update: Update, context: CallbackContext) -> None:
         print("Exception when calling DefaultApi->get_random_food_trivia: %s\n" % e)
 
 
+# def suggest(update: Update, context: CallbackContext) -> None:
+#     update.message.reply_text(f"Type your suggestion below, and we will look into it.")
+
+
 def update_rating(update: Update, context: CallbackContext) -> None:
     """Update database with user's usefulness rating."""
     query = update.callback_query
     # CallbackQueries need to be answered, even if no notification to the user is needed
     # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
     query.answer()
+
     reply_list = query.data.split()
 
     # Extract callback data: usefulness and ingredient
@@ -148,13 +144,6 @@ def update_rating(update: Update, context: CallbackContext) -> None:
     else:
         logger.info("Adding negative rating...")
         ratings.negative_rating(str(user_id), ingredient)
-
-
-# def suggest_command(update: Update, context: CallbackContext) -> None:
-#     update.message.reply_text(f"Type your suggestion below, and we will look into it.")
-#     suggestion_entry = update.message.text  # String
-#     user_id = update.message.from_user.id  # Integer
-#     if ()
 
 
 def end(update: Update, context: CallbackContext) -> int:

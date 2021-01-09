@@ -9,7 +9,9 @@ engine = create_engine('sqlite:///ingredient_list.db')      # Access ingredient 
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     name = update.message.chat.first_name
-    intro = f"Hi {name}! I'm <b>Ramsii</b>, the best chef in the world with 7 Michelin stars! \nMissing an ingredient for your recipe? What ingredient are you having a hard time finding? (Or if you're bored, try /help to see how capable I am! 😌)"
+    intro = f"Right, hello, {name}. <b>Ramsii</b> here, the best chef <s>companion</s> in the world, if I do say so myself. " \
+            f"\n\nMissing an ingredient for your recipe? What ingredient are you having a hard time finding? Type it in the chat below to look it up." \
+            f"\n\n\n---------------------------\n\nIf you need help, use /help, you donkey!"
 
     return update.message.reply_text(text=intro, parse_mode= ParseMode.HTML)
 
@@ -34,7 +36,7 @@ def user_search(user_input):
                 USER_RATING = ""
 
                 # Case where ingredient has no ratings yet
-                if PERCENTAGE_RATING == "0":
+                if PERCENTAGE_RATING == "0" or "0.0":
                     USER_RATING = "No users found this information useful."
                 else:
                     USER_RATING = "<b>" + PERCENTAGE_RATING + "%</b> of users found this information useful."
@@ -72,11 +74,11 @@ def user_search(user_input):
         return ""
 
 
-def suggestion(user_id, category, user_suggestion):
-    with engine.connect() as connection:
-        suggestion_entry = {"id": user_id, "category": category, "suggestions": user_suggestion}
-        ins_statement = text("""insert into suggestions(id, category, suggestions) values(:id, :category, :suggestions)""")
-        connection.execute(ins_statement, **suggestion_entry)
-
-
-# TODO: suggestions at failure state and not useful state
+# def suggestion(user_id, category, user_suggestion):
+#     with engine.connect() as connection:
+#         suggestion_entry = {"id": user_id, "category": category, "suggestions": user_suggestion}
+#         ins_statement = text("""insert into suggestions(id, category, suggestions) values(:id, :category, :suggestions)""")
+#         connection.execute(ins_statement, **suggestion_entry)
+#
+#
+# # TODO: suggestions at failure state and not useful state
