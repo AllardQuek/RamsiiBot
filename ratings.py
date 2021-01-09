@@ -62,7 +62,8 @@ def percentage_rating(user_input):
                 try:
                     PERCENTAGE = (NO_OF_RATINGS/NO_OF_RATERS) * 100
                     PERCENTAGE = round(PERCENTAGE, 1)
+                    return PERCENTAGE
                 except ZeroDivisionError:
-                    PERCENTAGE = 0
-        return PERCENTAGE
+                    PERCENTAGE = 0.0
+                    return PERCENTAGE
 

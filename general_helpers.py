@@ -36,7 +36,7 @@ def user_search(user_input):
                 USER_RATING = ""
 
                 # Case where ingredient has no ratings yet
-                if PERCENTAGE_RATING == "0" or "0.0":
+                if PERCENTAGE_RATING == "0.0":
                     USER_RATING = "No users found this information useful."
                 else:
                     USER_RATING = "<b>" + PERCENTAGE_RATING + "%</b> of users found this information useful."
