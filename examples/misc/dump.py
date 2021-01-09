@@ -91,7 +91,19 @@ return Updater.stop()
 
     return ConversationHandler.END
 
-    ===
+===
 
-    query.edit_message_reply_markup(ReplyKeyboardRemove())
-    query.edit_message_text(text=sub)
+query.edit_message_reply_markup(ReplyKeyboardRemove())
+query.edit_message_text(text=sub)
+
+===
+
+def end(update: Update, context: CallbackContext) -> int:
+    """/end will say bye if user wants to end the session."""
+    # TODO: Tell bot to stop listening for input
+    user = update.message.from_user
+    logger.info("User %s canceled the conversation.", user.first_name)
+
+    # https://giphy.com/gifs/foxtv-gordon-ramsay-hells-kitchen-f-off-ylyUQnaWJp7TRAGInK
+    update.message.reply_video("https://media.giphy.com/media/ylyUQnaWJp7TRAGInK/giphy.mp4")
+    Thread(target=stop_and_restart).start()

@@ -40,6 +40,8 @@ def main():
     def end(update: Update, context: CallbackContext) -> int:
         """/end will say bye if user wants to end the session."""
         update.message.reply_video("https://media.giphy.com/media/ylyUQnaWJp7TRAGInK/giphy.mp4")
+
+        # https://github.com/python-telegram-bot/python-telegram-bot/wiki/Code-snippets#simple-way-of-restarting-the-bot
         updater.stop()
         os.execl(sys.executable, sys.executable, *sys.argv)
 
