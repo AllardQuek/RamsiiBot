@@ -42,6 +42,7 @@ def main():
         update.message.reply_video("https://media.giphy.com/media/ylyUQnaWJp7TRAGInK/giphy.mp4")
 
         # https://github.com/python-telegram-bot/python-telegram-bot/wiki/Code-snippets#simple-way-of-restarting-the-bot
+        # TODO: add updater.start_polling() to /start as well and link with this
         # updater.stop()
         # os.execl(sys.executable, sys.executable, *sys.argv) Removed
 
