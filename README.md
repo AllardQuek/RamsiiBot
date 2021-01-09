@@ -1,4 +1,4 @@
-# Ramsii Bot 👨‍
+# RamsiiBot 👨‍🍳
 
 **_Want to cook but missing an ingredient? Ask Ramsii!_**
 
