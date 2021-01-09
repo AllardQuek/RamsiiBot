@@ -60,7 +60,7 @@ def percentage_rating(user_input):
                 NO_OF_RATINGS = int(row['rating'])
                 NO_OF_RATERS = int(row['raters'])
 
-                print("RATINS:", NO_OF_RATINGS)
+                print("RATINGS:", NO_OF_RATINGS)
                 print("RATERS:", NO_OF_RATERS)
 
                 try:

@@ -107,3 +107,5 @@ def end(update: Update, context: CallbackContext) -> int:
     # https://giphy.com/gifs/foxtv-gordon-ramsay-hells-kitchen-f-off-ylyUQnaWJp7TRAGInK
     update.message.reply_video("https://media.giphy.com/media/ylyUQnaWJp7TRAGInK/giphy.mp4")
     Thread(target=stop_and_restart).start()
+
+===
