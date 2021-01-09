@@ -43,7 +43,7 @@ def main():
 
         # https://github.com/python-telegram-bot/python-telegram-bot/wiki/Code-snippets#simple-way-of-restarting-the-bot
         updater.stop()
-        os.execl(sys.executable, sys.executable, *sys.argv)
+        # os.execl(sys.executable, sys.executable, *sys.argv)
 
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
