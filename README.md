@@ -13,11 +13,8 @@ Inspired by a certain legendary and over-memed British chef, Ramsii is built to 
 In addition, Ramsii offers users entertainment as well as a simple recipe recommendation for those who have a hard time deciding what they should cook. Below are the other commands our bot currently supports:
 
 - /trivia: For users to learn some interesting facts about food in general
-
 - /hungry: Our "I'm Feeling Hungry" feature, which gives users a randomly selected recipe
-
 - /joke: Gives users a good laugh!
-
 - /end: A simple farewell from Gordon Ramsay himself
 
 ## How we built it 🛠
