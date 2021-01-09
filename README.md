@@ -1,4 +1,4 @@
-# RamsiiBot 👨‍🍳
+# [RamsiiBot] (https://devpost.com/software/substitute-ramsay) 👨‍🍳
 
 **_Want to cook but missing an ingredient? Ask Ramsii!_**
 
