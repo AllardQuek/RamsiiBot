@@ -8,9 +8,9 @@ Read on to see what Ramsii offers and check out our Devpost submission [here](ht
 As cash-strapped students who cook from time to time, we've always struggled with the disappointment of not being able to prepare a dish simply because we were missing 1 or 2 ingredients for a recipe. If only we could find substitutes for them!
 
 ## What it does 💪
-Inspired by a certain legendary and over-memed British chef, Ramsii is built to provide cooks with alternatives for ingredients they might be missing to complete a recipe. In addition, Ramsii offers users entertainment as well as a simple recipe recommendation for those who have a hard time deciding what they should cook. There is also a rating function for users to judge whether our proposed substitution actually worked; the aggregate percentage score of the ingredient will be displayed for all to see.
+Inspired by a certain legendary and over-memed British chef, Ramsii is built to provide cooks with alternatives for ingredients they might be missing to complete a recipe. There is also a rating function for users to judge whether our proposed substitution actually worked; the aggregate percentage score of the ingredient will be displayed for all to see. 
 
-Aside from that, below are the commands our bot currently supports:
+In addition, Ramsii offers users entertainment as well as a simple recipe recommendation for those who have a hard time deciding what they should cook. Below are the other commands our bot currently supports:
 
 - /trivia: For users to learn some interesting facts about food in general
 
