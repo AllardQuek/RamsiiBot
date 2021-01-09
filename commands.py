@@ -100,7 +100,7 @@ def joke_command(update: Update, context: CallbackContext) -> None:
         # Get a random food joke
         response = api_instance.get_a_random_food_joke()
         data = response.json()
-        joke = data['text']
+        joke = "Laugh a bit, will ya?\n\n" + data['text']
         logger.info(f"Here is the response: {response}")
 
         update.message.reply_text(joke)

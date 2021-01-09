@@ -65,3 +65,4 @@ def percentage_rating(user_input):
                 except ZeroDivisionError:
                     PERCENTAGE = 0.0
         return PERCENTAGE
+

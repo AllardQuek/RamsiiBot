@@ -31,7 +31,8 @@ def user_search(user_input):
             if user_input.lower() == row['ing_input']:				
                 # search_failure = False
                 TITLE = "<b><u>" + row['full_ing'].upper() + "</u></b>"
-                PERCENTAGE_RATING = str(percentage_rating(user_input))
+                PERCENTAGE = percentage_rating(user_input)
+                PERCENTAGE_RATING = str(PERCENTAGE)
                 SEPARATOR = "\n\n\n---------------------\n\n"
                 USER_RATING = ""
 
