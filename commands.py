@@ -45,7 +45,7 @@ def substitute(update: Update, context: CallbackContext) -> None:
     logger.info(f"Going to get {ingredient} substitutes...")
 
     # Query sqlite database for substitute(s)
-    sub = user_search(ingredient)
+    sub = user_search(f'{ingredient}')
 
     if not sub:
         # If sub turns out to be the empty string, means we found no results from our database
@@ -128,7 +128,7 @@ def update_rating(update: Update, context: CallbackContext) -> None:
     # Reply with what the user selected
     reply_markup = InlineKeyboardMarkup([])
     query.edit_message_reply_markup(reply_markup)
-    query.message.reply_text(text=f"Thank you for your feedback! You selected: {usefulness}\n\nWhat else do you want to substitute?")
+    query.message.reply_text(text=f"Thanks for your feedback. \n\nNow, what else do you want to substitute?")
 
     user_id = query.from_user.id    # Integer
 
