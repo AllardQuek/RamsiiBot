@@ -26,7 +26,7 @@ def main():
     with open('config.json', 'r') as f:
 	    config = json.load(f)
 
-    PORT = int(os.environ.get('PORT', 5000))
+    PORT = int(os.environ.get('PORT', 5000))    # * For deploying to Heroku
     TOKEN = config['telegram_bot_token']
     
     updater = Updater(TOKEN, use_context=True)
