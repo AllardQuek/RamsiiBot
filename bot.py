@@ -20,12 +20,8 @@ import json
 import sys
 
 
-# with open('config.json', 'r') as f:
-# 	    config = json.load(f)
-
 PORT = int(os.environ.get('PORT', 5000))    # * For deploying to Heroku
-TOKEN = os.getenv('TOKEN')
-# TOKEN = config['telegram_bot_token']
+TOKEN = os.getenv('TOKEN')                  # * To set the TOKEN environment variable: export TOKEN="<your_token>"
 
 
 def main():
