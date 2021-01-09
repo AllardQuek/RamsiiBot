@@ -57,13 +57,13 @@ def main():
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, substitute))
 
     # Start the Bot - for easier testing
-    updater.start_polling()
+    # updater.start_polling()
 
     # * For deploying to Heroku
-    # updater.start_webhook(listen="0.0.0.0",
-    #                       port=int(PORT),
-    #                       url_path=TOKEN)
-    # updater.bot.setWebhook('https://hacknroll-2021.herokuapp.com/' + TOKEN)
+    updater.start_webhook(listen="0.0.0.0",
+                          port=int(PORT),
+                          url_path=TOKEN)
+    updater.bot.setWebhook('https://hacknroll-2021.herokuapp.com/' + TOKEN)
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
