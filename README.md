@@ -2,7 +2,7 @@
 
 **_Want to cook but missing an ingredient? Ask Ramsii!_**
 
-Read on to see what Ramsii offers, check out our Devpost submission [here](https://devpost.com/software/substitute-ramsay), or try our bot out [here](https://t.me/RamsiiBot)! 🙂
+Read on to see what Ramsii offers, check out our [Devpost submission](https://devpost.com/software/substitute-ramsay), or try our bot out [here](https://t.me/RamsiiBot)! 🙂
 
 ## Inspiration 💡
 As cash-strapped students who cook from time to time, we've always struggled with the disappointment of not being able to prepare a dish simply because we were missing 1 or 2 ingredients for a recipe. If only we could find substitutes for them!
